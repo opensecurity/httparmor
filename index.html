@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HttpArmor | The Ultimate HTTP Security Header Generator</title>
+    <meta name="description"
+        content="Generate a complete and robust set of security headers (CSP, HSTS, CORS) for your web application. A free, client-side tool for developers." />
+    <meta name="keywords"
+        content="http security headers, csp generator, hsts, cors, owasp, security headers, header builder, content security policy, web security, devsecops" />
+    <meta name="author" content="Lucian BLETAN" />
+    <link rel="canonical" href="https://opensecurity.github.io/httparmor/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://opensecurity.github.io/httparmor/" />
+    <meta property="og:title" content="HttpArmor | The Ultimate HTTP Security Header Generator" />
+    <meta property="og:description"
+        content="Generate a complete and robust set of security headers (CSP, HSTS, CORS) for your web application." />
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://opensecurity.github.io/httparmor/" />
+    <meta property="twitter:title" content="HttpArmor | The Ultimate HTTP Security Header Generator" />
+    <meta property="twitter:description"
+        content="Generate a complete and robust set of security headers (CSP, HSTS, CORS) for your web application." />
+    <meta name="theme-color" content="#0b0f19" />
+    <link rel="stylesheet" href="style.css" />
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "HttpArmor",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "Web",
+        "description": "A free, client-side tool to generate a complete and robust set of security headers (CSP, HSTS, CORS) for your web application.",
+        "keywords": "http security headers, csp generator, hsts, cors, owasp, security headers, header builder, content security policy, web security, devsecops",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        }
+    }
+    </script>
+</head>
+
+<body>
+    <div class="main-container">
+        <header class="page-header">
+            <h1>HttpArmor</h1>
+        </header>
+        <div class="presets-panel">
+            <h3>Load Preset</h3>
+            <div class="presets-buttons">
+                <button class="preset-button" data-preset="spa">Modern SPA</button>
+                <button class="preset-button" data-preset="static">Static Site</button>
+                <button class="preset-button" data-preset="wordpress">WordPress</button>
+                <button class="preset-button active" data-preset="default">Secure Default</button>
+            </div>
+        </div>
+        <div class="output-box">
+            <div class="output-header">
+                <h3>Generated Configuration</h3>
+                <button id="copy-button">Copy</button>
+            </div>
+            <pre id="output-pre"><code id="output-code"></code></pre>
+        </div>
+        <form class="config-panel" id="main-form" novalidate>
+            <details class="header-module" id="csp-module" open>
+                <summary>
+                    <span class="summary-title">Content-Security-Policy</span>
+                    <div class="toggle-switch">
+                        <input type="checkbox" id="csp-enabled" class="toggle-input" checked />
+                        <label for="csp-enabled" class="toggle-label"></label>
+                    </div>
+                </summary>
+                <div class="module-content">
+                    <div class="grid-container">
+                        <div class="form-group">
+                            <label for="csp-default-src">default-src<span class="info-icon"
+                                    data-tooltip="Default policy for fetching resources.">'i'</span></label>
+                            <input type="text" id="csp-default-src" data-directive="default-src"
+                                data-validate="csp-source-list" />
+                            <div class="validation-error"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="csp-script-src">script-src<span class="info-icon"
+                                    data-tooltip="Valid sources for JavaScript.">'i'</span></label>
+                            <input type="text" id="csp-script-src" data-directive="script-src"
+                                data-validate="csp-source-list" />
+                            <div class="validation-error"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="csp-style-src">style-src<span class="info-icon"
+                                    data-tooltip="Valid sources for stylesheets.">'i'</span></label>
+                            <input type="text" id="csp-style-src" data-directive="style-src"
+                                data-validate="csp-source-list" />
+                            <div class="validation-error"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="csp-img-src">img-src<span class="info-icon"
+                                    data-tooltip="Valid sources for images.">'i'</span></label>
+                            <input type="text" id="csp-img-src" data-directive="img-src"
+                                data-validate="csp-source-list" />
+                            <div class="validation-error"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="csp-object-src">object-src<span class="info-icon"
+                                    data-tooltip="Sources for <object>. Recommend 'none'.">'i'</span></label>
+                            <input type="text" id="csp-object-src" data-directive="object-src"
+                                data-validate="csp-source-list" />
+                            <div class="validation-error"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="csp-frame-ancestors">frame-ancestors<span class="info-icon"
+                                    data-tooltip="Pages that can embed this page. Prevents clickjacking.">'i'</span></label>
+                            <input type="text" id="csp-frame-ancestors" data-directive="frame-ancestors"
+                                data-validate="csp-source-list" />
+                            <div class="validation-error"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="csp-base-uri">base-uri<span class="info-icon"
+                                    data-tooltip="Restricts URLs in <base> element.">'i'</span></label>
+                            <input type="text" id="csp-base-uri" data-directive="base-uri"
+                                data-validate="csp-source-list" />
+                            <div class="validation-error"></div>
+                        </div>
+                    </div>
+                    <div class="guidance-panel" id="guidance-csp" hidden></div>
+                </div>
+            </details>
+            <details class="header-module" id="pp-module">
+                <summary>
+                    <span class="summary-title">Permissions-Policy</span>
+                    <div class="toggle-switch">
+                        <input type="checkbox" id="pp-enabled" class="toggle-input" checked />
+                        <label for="pp-enabled" class="toggle-label"></label>
+                    </div>
+                </summary>
+                <div class="module-content">
+                    <div class="grid-container" style="--grid-columns: 4;">
+                        <div class="form-group"><label for="pp-accelerometer">accelerometer<span class="info-icon" data-tooltip="Controls access to the Accelerometer interface.">'i'</span></label><input type="text" id="pp-accelerometer" data-permission="accelerometer" data-validate="pp-value" /></div>
+                        <div class="form-group"><label for="pp-ambient-light-sensor">ambient-light-sensor<span class="info-icon" data-tooltip="Controls access to the AmbientLightSensor interface.">'i'</span></label><input type="text" id="pp-ambient-light-sensor" data-permission="ambient-light-sensor" data-validate="pp-value" /></div>
+                        <div class="form-group"><label for="pp-attribution-reporting">attribution-reporting<span class="info-icon" data-tooltip="Controls access to the Attribution Reporting API.">'i'</span></label><input type="text" id="pp-attribution-reporting" data-permission="attribution-reporting" data-validate="pp-value" /></div>
+                        <div class="form-group"><label for="pp-autoplay">autoplay<span class="info-icon" data-tooltip="Controls whether media can autoplay.">'i'</span></label><input type="text" id="pp-autoplay" data-permission="autoplay" data-validate="pp-value" /></div>
+                        <div class="form-group"><label for="pp-bluetooth">bluetooth<span class="info-icon" data-tooltip="Controls access to the Web Bluetooth API.">'i'</span></label><input type="text" id="pp-bluetooth" data-permission="bluetooth" data-validate="pp-value" /></div>
+                        <div class="form-group"><label for="pp-Browse-topics">Browse-topics<span class="info-icon" data-tooltip="Controls access to the Topics API.">'i'</span></label><input type="text" id="pp-Browse-topics" data-permission="Browse-topics" data-validate="pp-value" /></div>
+                        <div class="form-group"><label for="pp-camera">camera<span class="info-icon" data-tooltip="Controls access to video input devices.">'i'</span></label><input type="text" id="pp-camera" data-permission="camera" data-validate="pp-value" /></div>
+                        <div class="form-group"><label for="pp-compute-pressure">compute-pressure<span class="info-icon" data-tooltip="Controls access to the Compute Pressure API.">'i'</span></label><input type="text" id="pp-compute-pressure" data-permission="compute-pressure" data-validate="pp-value" /></div>
+                        <div class="form-group"><label for="pp-cross-origin-isolated">cross-origin-isolated<span class="info-icon" data-tooltip="Controls whether the document is treated as cross-origin isolated.">'i'</span></label><input type="text" id="pp-cross-origin-isolated" data-permission="cross-origin-isolated" data-validate="pp-value" /></div>
+                        <div class="form-group"><label for="pp-display-capture">display-capture<span class="info-icon" data-tooltip="Controls access to screen capture (getDisplayMedia).">'i'</span></label><input type="text" id="pp-display-capture" data-permission="display-capture" data-validate="pp-value" /></div>
+                        <div class="form-group"><label for="pp-encrypted-media">encrypted-media<span class="info-icon" data-tooltip="Controls access to the Encrypted Media Extensions API.">'i'</span></label><input type="text" id="pp-encrypted-media" data-permission="encrypted-media" data-validate="pp-value" /></div>
+                        <div class="form-group"><label for="pp-fullscreen">fullscreen<span class="info-icon" data-tooltip="Controls ability to use fullscreen mode.">'i'</span></label><input type="text" id="pp-fullscreen" data-permission="fullscreen" data-validate="pp-value" /></div>
+                        <div class="form-group"><label for="pp-gamepad">gamepad<span class="info-icon" data-tooltip="Controls access to the Gamepad API.">'i'</span></label><input type="text" id="pp-gamepad" data-permission="gamepad" data-validate="pp-value" /></div>
+                        <div class="form-group"><label for="pp-geolocation">geolocation<span class="info-icon" data-tooltip="Controls access to the Geolocation interface.">'i'</span></label><input type="text" id="pp-geolocation" data-permission="geolocation" data-validate="pp-value" /></div>
+                        <div class="form-group"><label for="pp-gyroscope">gyroscope<span class="info-icon" data-tooltip="Controls access to the Gyroscope interface.">'i'</span></label><input type="text" id="pp-gyroscope" data-permission="gyroscope" data-validate="pp-value" /></div>
+                        <div class="form-group"><label for="pp-hid">hid<span class="info-icon" data-tooltip="Controls access to the WebHID API.">'i'</span></label><input type="text" id="pp-hid" data-permission="hid" data-validate="pp-value" /></div>
+                        <div class="form-group"><label for="pp-identity-credentials-get">identity-credentials-get<span class="info-icon" data-tooltip="Controls access to the FedCM API.">'i'</span></label><input type="text" id="pp-identity-credentials-get" data-permission="identity-credentials-get" data-validate="pp-value" /></div>
+                        <div class="form-group"><label for="pp-idle-detection">idle-detection<span class="info-icon" data-tooltip="Controls access to the Idle Detection API.">'i'</span></label><input type="text" id="pp-idle-detection" data-permission="idle-detection" data-validate="pp-value" /></div>
+                        <div class="form-group"><label for="pp-local-fonts">local-fonts<span class="info-icon" data-tooltip="Controls access to locally-installed fonts.">'i'</span></label><input type="text" id="pp-local-fonts" data-permission="local-fonts" data-validate="pp-value" /></div>
+                        <div class="form-group"><label for="pp-magnetometer">magnetometer<span class="info-icon" data-tooltip="Controls access to the Magnetometer interface.">'i'</span></label><input type="text" id="pp-magnetometer" data-permission="magnetometer" data-validate="pp-value" /></div>
+                        <div class="form-group"><label for="pp-microphone">microphone<span class="info-icon" data-tooltip="Controls access to audio input devices.">'i'</span></label><input type="text" id="pp-microphone" data-permission="microphone" data-validate="pp-value" /></div>
+                        <div class="form-group"><label for="pp-midi">midi<span class="info-icon" data-tooltip="Controls access to the Web MIDI API.">'i'</span></label><input type="text" id="pp-midi" data-permission="midi" data-validate="pp-value" /></div>
+                        <div class="form-group"><label for="pp-otp-credentials">otp-credentials<span class="info-icon" data-tooltip="Controls access to the WebOTP API.">'i'</span></label><input type="text" id="pp-otp-credentials" data-permission="otp-credentials" data-validate="pp-value" /></div>
+                        <div class="form-group"><label for="pp-payment">payment<span class="info-icon" data-tooltip="Controls access to the Payment Request API.">'i'</span></label><input type="text" id="pp-payment" data-permission="payment" data-validate="pp-value" /></div>
+                        <div class="form-group"><label for="pp-picture-in-picture">picture-in-picture<span class="info-icon" data-tooltip="Controls access to the Picture-in-Picture API.">'i'</span></label><input type="text" id="pp-picture-in-picture" data-permission="picture-in-picture" data-validate="pp-value" /></div>
+                        <div class="form-group"><label for="pp-publickey-credentials-create">publickey-credentials-create<span class="info-icon" data-tooltip="Controls creation of new WebAuthn credentials.">'i'</span></label><input type="text" id="pp-publickey-credentials-create" data-permission="publickey-credentials-create" data-validate="pp-value" /></div>
+                        <div class="form-group"><label for="pp-publickey-credentials-get">publickey-credentials-get<span class="info-icon" data-tooltip="Controls retrieval of WebAuthn credentials.">'i'</span></label><input type="text" id="pp-publickey-credentials-get" data-permission="publickey-credentials-get" data-validate="pp-value" /></div>
+                        <div class="form-group"><label for="pp-screen-wake-lock">screen-wake-lock<span class="info-icon" data-tooltip="Controls access to the Screen Wake Lock API.">'i'</span></label><input type="text" id="pp-screen-wake-lock" data-permission="screen-wake-lock" data-validate="pp-value" /></div>
+                        <div class="form-group"><label for="pp-serial">serial<span class="info-icon" data-tooltip="Controls access to the Web Serial API.">'i'</span></label><input type="text" id="pp-serial" data-permission="serial" data-validate="pp-value" /></div>
+                        <div class="form-group"><label for="pp-speaker-selection">speaker-selection<span class="info-icon" data-tooltip="Controls access to the Audio Output Devices API.">'i'</span></label><input type="text" id="pp-speaker-selection" data-permission="speaker-selection" data-validate="pp-value" /></div>
+                        <div class="form-group"><label for="pp-storage-access">storage-access<span class="info-icon" data-tooltip="Controls access to the Storage Access API.">'i'</span></label><input type="text" id="pp-storage-access" data-permission="storage-access" data-validate="pp-value" /></div>
+                        <div class="form-group"><label for="pp-usb">usb<span class="info-icon" data-tooltip="Controls access to the WebUSB API.">'i'</span></label><input type="text" id="pp-usb" data-permission="usb" data-validate="pp-value" /></div>
+                        <div class="form-group"><label for="pp-web-share">web-share<span class="info-icon" data-tooltip="Controls access to the Web Share API.">'i'</span></label><input type="text" id="pp-web-share" data-permission="web-share" data-validate="pp-value" /></div>
+                        <div class="form-group"><label for="pp-window-management">window-management<span class="info-icon" data-tooltip="Controls access to the Window Management API.">'i'</span></label><input type="text" id="pp-window-management" data-permission="window-management" data-validate="pp-value" /></div>
+                        <div class="form-group"><label for="pp-xr-spatial-tracking">xr-spatial-tracking<span class="info-icon" data-tooltip="Controls access to the WebXR Device API.">'i'</span></label><input type="text" id="pp-xr-spatial-tracking" data-permission="xr-spatial-tracking" data-validate="pp-value" /></div>
+                    </div>
+                    <div class="guidance-panel" id="guidance-pp" hidden></div>
+                </div>
+            </details>
+            <details class="header-module" id="coi-module">
+                <summary>
+                    <span class="summary-title">Cross-Origin Policies</span>
+                    <div class="toggle-switch">
+                        <input type="checkbox" id="coi-enabled" class="toggle-input" checked />
+                        <label for="coi-enabled" class="toggle-label"></label>
+                    </div>
+                </summary>
+                <div class="module-content">
+                    <div class="grid-container">
+                        <div class="form-group">
+                            <label for="coop-value">Cross-Origin-Opener-Policy<span class="info-icon"
+                                    data-tooltip="Protects top-level windows from cross-origin documents.">'i'</span></label>
+                            <select id="coop-value">
+                                <option>same-origin</option>
+                                <option>same-origin-allow-popups</option>
+                                <option>unsafe-none</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="coep-value">Cross-Origin-Embedder-Policy<span class="info-icon"
+                                    data-tooltip="Prevents loading cross-origin resources that don't grant explicit permission.">'i'</span></label>
+                            <select id="coep-value">
+                                <option>require-corp</option>
+                                <option>credentialless</option>
+                                <option>unsafe-none</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="corp-value">Cross-Origin-Resource-Policy<span class="info-icon"
+                                    data-tooltip="Prevents other domains from loading your resources.">'i'</span></label>
+                            <select id="corp-value">
+                                <option>same-origin</option>
+                                <option>same-site</option>
+                                <option>cross-origin</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </details>
+            <details class="header-module" id="hsts-module">
+                <summary>
+                    <span class="summary-title">Strict-Transport-Security</span>
+                    <div class="toggle-switch">
+                        <input type="checkbox" id="hsts-enabled" class="toggle-input" checked />
+                        <label for="hsts-enabled" class="toggle-label"></label>
+                    </div>
+                </summary>
+                <div class="module-content">
+                    <div class="form-group">
+                        <label for="hsts-max-age">max-age (seconds)<span class="info-icon"
+                                data-tooltip="Duration to enforce HTTPS. Recommended: 63072000 (2 years).">'i'</span></label>
+                        <input type="number" id="hsts-max-age" value="63072000" />
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="hsts-include-subdomains" checked/>
+                        <label for="hsts-include-subdomains">includeSubDomains<span class="info-icon"
+                                data-tooltip="Apply HSTS policy to all subdomains.">'i'</span></label>
+                    </div>
+                    <div class="guidance-panel" id="guidance-hsts" hidden></div>
+                </div>
+            </details>
+            <details class="header-module" id="misc-module">
+                <summary>
+                    <span class="summary-title">General & Legacy Headers</span>
+                    <div class="toggle-switch">
+                        <input type="checkbox" id="misc-enabled" class="toggle-input" checked />
+                        <label for="misc-enabled" class="toggle-label"></label>
+                    </div>
+                </summary>
+                <div class="module-content">
+                    <div class="grid-container">
+                        <div class="form-group">
+                            <label for="xcto-value">X-Content-Type-Options<span class="info-icon"
+                                    data-tooltip="Prevents MIME-sniffing. Always 'nosniff'.">'i'</span></label>
+                            <select id="xcto-value">
+                                <option>nosniff</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="xfo-value">X-Frame-Options<span class="info-icon"
+                                    data-tooltip="[Obsolete] Use CSP frame-ancestors instead.">'i'</span></label>
+                            <select id="xfo-value">
+                                <option>DENY</option>
+                                <option selected>SAMEORIGIN</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="rp-value">Referrer-Policy<span class="info-icon"
+                                    data-tooltip="Controls how much referrer information is sent.">'i'</span></label>
+                            <select id="rp-value">
+                                <option>strict-origin-when-cross-origin</option>
+                                <option>no-referrer</option>
+                                <option>same-origin</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="cache-value">Cache-Control<span class="info-icon"
+                                    data-tooltip="Instructs browsers how to cache resources.">'i'</span></label>
+                            <select id="cache-value">
+                                <option>no-store, no-cache, must-revalidate</option>
+                                <option>private, max-age=3600</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="guidance-panel" id="guidance-misc" hidden></div>
+                </div>
+            </details>
+        </form>
+    </div>
+    <footer class="page-footer">
+    <a href="https://github.com/opensecurity/httparmor" target="_blank" rel="noopener noreferrer">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16" fill="currentColor" role="img" aria-labelledby="github-title">
+            <title id="github-title">GitHub Repository</title>
+            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path>
+        </svg>
+        <span>View on GitHub</span>
+        <span class="visually-hidden">, a project by Lucian BLETAN</span>
+    </a>
+    </footer>
+    <div id="tooltip-container" class="tooltip"></div>
+    <script src="app.js" defer></script>
+</body>
+
+</html>
